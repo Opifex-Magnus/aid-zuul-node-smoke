@@ -1,21 +1,9 @@
 - hosts: all
   tasks:
-    - name: Copy the exact source Zuul merged to the node
+    - name: Copy the exact source Zuul prepared to the node
       ansible.builtin.copy:
         src: '{{ zuul.executor.work_root }}/{{ zuul.project.src_dir }}/'
         dest: /home/zuul/smoke/
-    - name: A test that can pass only on the farm
+    - name: Remote test and main refusal, with logs retained on the node
       ansible.builtin.command:
-        argv: [bazel, test, --config=remote, --nocache_test_results, '//:remote_smoke']
-        chdir: /home/zuul/smoke
-      register: remote
-    - ansible.builtin.debug:
-        var: remote
-    - name: The same credential must be refused under main
-      ansible.builtin.command:
-        argv: [bazel, test, --config=remote, --remote_instance_name=main, --nocache_test_results, '//:remote_smoke']
-        chdir: /home/zuul/smoke
-      register: denied
-      failed_when: denied.rc == 0 or 'Permission' not in denied.stderr
-    - ansible.builtin.debug:
-        var: denied
+        argv: [bash, /home/zuul/smoke/run.sh]
