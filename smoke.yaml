@@ -2,7 +2,7 @@
   tasks:
     - name: Copy the exact source Zuul merged to the node
       ansible.builtin.copy:
-        src: '{{ zuul.executor.src_root }}/{{ zuul.project.src_dir }}/'
+        src: '{{ zuul.executor.work_root }}/{{ zuul.project.src_dir }}/'
         dest: /home/zuul/smoke/
     - name: A test that can pass only on the farm
       ansible.builtin.command:
