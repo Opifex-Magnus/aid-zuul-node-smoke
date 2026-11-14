@@ -2,8 +2,9 @@ load(":smoke.bzl", "farm_test")
 
 platform(
     name = "farm",
+    constraint_values = ["@platforms//cpu:x86_64", "@platforms//os:linux"],
     exec_properties = {
-        "OSFamily": "Linux",
+        "OSFamily": "linux",
         "OSRelease": "ubuntu26.04",
         "SwiftVersion": "6.4.0",
     },
