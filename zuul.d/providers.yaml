@@ -1,0 +1,33 @@
+# AIDepartment#1345: a PR-only k3s pod, bounded by deploy/zuul/node/. The Kubernetes driver needs
+# cluster-wide namespace/RBAC rights and cannot install the tenant policies; use the static driver.
+# Jobs share this PR trust level. Never put a trusted post credential on aid-node (#1351).
+- image:
+    name: aid-node
+    type: cloud
+- flavor:
+    name: aid-node
+- label:
+    name: aid-node
+    image: aid-node
+    flavor: aid-node
+- section:
+    name: aid-k3s
+    connection: aid-nodes
+    launch-timeout: 300
+    launch-attempts: 1
+    flavors:
+      - name: aid-node
+- provider:
+    name: aid-k3s
+    section: aid-k3s
+    nodes:
+      - name: node-0.node.zuul-nodes.svc.cluster.local
+        label: aid-node
+        connection-port: 2222
+        host-key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjWF9XpzNC3GUmCRn9/JOKIuej+E9vhAMeLhtHfQkvx zuul-node
+    labels:
+      - name: aid-node
+    images:
+      - name: aid-node
+        python-path: /usr/bin/python3
+        username: zuul

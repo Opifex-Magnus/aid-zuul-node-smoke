@@ -6,7 +6,7 @@
         dest: /home/zuul/smoke/
     - name: A test that can pass only on the farm
       ansible.builtin.command:
-        argv: [bazel, test, --config=remote, --nocache_test_results, --remote_grpc_log=/home/zuul/grpc.log, '//:remote_smoke']
+        argv: [bazel, test, --config=remote, --nocache_test_results, '//:remote_smoke']
         chdir: /home/zuul/smoke
       register: remote
     - ansible.builtin.debug:
