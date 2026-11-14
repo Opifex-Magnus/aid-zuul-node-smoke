@@ -1,0 +1,7 @@
+startup --host_jvm_args=-Xmx768m
+startup --max_idle_secs=60
+common:remote --remote_instance_name=dev
+common:remote --remote_upload_local_results=false
+common:remote --tls_certificate=ca.crt
+build:remote --extra_execution_platforms=//:farm
+test --test_output=all

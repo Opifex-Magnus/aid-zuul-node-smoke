@@ -1,0 +1,18 @@
+- pipeline:
+    name: smoke
+    manager: independent
+    trigger:
+      timer:
+        - time: '* * * * *'
+- job:
+    name: base
+    parent: null
+    nodeset:
+      nodes:
+        - name: node
+          label: aid-node
+    timeout: 600
+    run: smoke.yaml
+- project:
+    smoke:
+      jobs: [base]
